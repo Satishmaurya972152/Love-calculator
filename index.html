@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>🔥Love Inferno🔥</title>
+<meta name="description" content="Do naam dalen aur dekhen love percentage — cinematic dangerous animations ke saath.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Dancing+Script&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%; scroll-behavior:smooth;}
+  body{
+    font-family:'Poppins',sans-serif;
+    background:#0a0000;
+    color:#fff;
+    overflow-x:hidden;
+  }
+
+  /* Floating hearts */
+  .heart{position:absolute;font-size:1.2rem;color:red;animation:floatUp linear infinite;opacity:0.9;pointer-events:none;}
+  @keyframes floatUp{
+    0%{transform:translateY(110vh) rotate(0deg);opacity:0}
+    40%{opacity:1}
+    100%{transform:translateY(-30vh) rotate(360deg);opacity:0}
+  }
+
+  /* sparks */
+  .spark{position:absolute;width:3px;height:3px;background:orange;border-radius:50%;box-shadow:0 0 8px 2px rgba(255,200,0,0.9);animation:sparkMove linear infinite;pointer-events:none}
+  @keyframes sparkMove{
+    0%{transform:translateY(110vh) scale(0);opacity:0}
+    40%{opacity:1;transform:translateY(50vh) scale(1)}
+    100%{transform:translateY(-50vh) scale(0);opacity:0}
+  }
+
+  /* main card */
+  .card{
+    position:relative;
+    width:820px;
+    max-width:96%;
+    margin:2rem auto 0 auto;
+    background:linear-gradient(180deg, rgba(40,0,0,0.55), rgba(10,0,0,0.4));
+    border-radius:18px;
+    padding:26px;
+    box-shadow:0 8px 40px rgba(255,26,26,0.12), 0 0 30px 4px rgba(255,20,20,0.06);
+    text-align:center;
+    backdrop-filter: blur(8px);
+    border:1px solid rgba(255,20,20,0.12);
+  }
+  h1{font-family:'Dancing Script',cursive;font-size:2.1rem;color:#ff8080;text-shadow:0 0 12px rgba(255,80,80,0.18);margin-bottom:6px}
+  p.lead{color:#ffb3b3;margin-bottom:14px}
+
+  .form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .form input{
+    width:220px;max-width:40%;
+    padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);
+    background:rgba(255,255,255,0.03);color:#fff;font-size:16px;outline:none
+  }
+  .form input::placeholder{color:#ffd8d8}
+  .btn{
+    padding:12px 18px;border-radius:12px;border:0;background:linear-gradient(90deg,#ff1a1a,#ff6b6b);
+    color:#fff;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(255,60,60,0.12);transition:transform .15s, box-shadow .15s;
+  }
+  .btn:hover{transform:translateY(-3px);box-shadow:0 18px 36px rgba(255,60,60,0.18)}
+  .btn:active{transform:translateY(0)}
+
+  /* loading bar */
+  .loading-wrap{margin-top:18px;display:none;align-items:center;flex-direction:column}
+  .loader{width:280px;max-width:85%;height:14px;background:rgba(255,255,255,0.06);border-radius:999px;overflow:hidden;border:1px solid rgba(255,255,255,0.03)}
+  .bar{height:100%;width:0;background:linear-gradient(90deg,#ff8a8a,#ff2d2d);transition:width .9s ease}
+  .loading-text{margin-top:8px;color:#ffbfbf;font-size:14px}
+
+  .result{margin-top:20px;display:none}
+  .percent{font-size:3.4rem;font-weight:800;color:#ffdddd; text-shadow:0 6px 30px rgba(255,40,40,0.12);animation:none}
+  .emoji{font-size:3rem;margin-top:8px}
+  .message{margin-top:8px;color:#ffd6d6;font-size:15px}
+
+  /* modal */
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,0.65);display:flex;align-items:center;justify-content:center;z-index:40;opacity:0;pointer-events:none;transition:opacity .18s}
+  .modal.show{opacity:1;pointer-events:auto}
+  .modal-card{background:linear-gradient(180deg,#230000,#120000);padding:22px;border-radius:14px;min-width:260px;text-align:center;border:1px solid rgba(255,50,50,0.12);box-shadow:0 10px 40px rgba(255,20,20,0.12)}
+  .modal h2{color:#ffdede;margin-bottom:8px;font-size:1.2rem}
+  .modal p{color:#ffcfcf}
+  .modal button{margin-top:14px;padding:10px 16px;border-radius:10px;border:0;background:linear-gradient(90deg,#ff3b3b,#ff7b7b);color:#fff;font-weight:700;cursor:pointer}
+
+  /* confetti */
+  .confetti{position:fixed;left:0;right:0;top:0;bottom:0;pointer-events:none;overflow:hidden;z-index:50}
+
+  /* responsive */
+  @media (max-width:520px){
+    h1{font-size:1.6rem}
+    .form input{width:140px}
+    .percent{font-size:2.4rem}
+    .loader{width:220px}
+  }
+
+  /* Floating About Us Button */
+  #aboutBtn{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    padding:10px 16px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(90deg,#ff3b3b,#ff7b7b);
+    color:#fff;
+    font-weight:700;
+    cursor:pointer;
+    z-index:100;
+    box-shadow:0 6px 18px rgba(255,60,60,0.2);
+    transition:transform 0.15s;
+  }
+
+  /* About Us Modal */
+  #aboutModal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.75);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.2s;
+    z-index:200;
+  }
+  #aboutModal .modal-content{
+    background:linear-gradient(180deg,#230000,#120000);
+    padding:26px;
+    border-radius:18px;
+    max-width:600px;
+    width:90%;
+    text-align:left;
+    color:#ffdede;
+    line-height:1.6;
+    border:1px solid rgba(255,20,20,0.12);
+    position:relative;
+  }
+  #aboutModal h2{
+    font-family:'Dancing Script',cursive;
+    font-size:1.8rem;
+    color:#ff8080;
+    margin-bottom:12px;
+  }
+  #aboutModal button{
+    margin-top:16px;
+    padding:10px 16px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(90deg,#ff1a1a,#ff6b6b);
+    color:#fff;
+    font-weight:700;
+    cursor:pointer;
+    display:block;
+    margin-left:auto;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- animated layers -->
+<div id="hearts-layer"></div>
+<div id="sparks-layer"></div>
+
+<!-- Love Calculator Card -->
+<div class="card" role="main" aria-live="polite">
+  <h1>Love Percentage Calculator ❤️‍🔥</h1>
+  <p class="lead">Apna aur apne lover ka naam daalein — thoda suspense aur phir fiery result milega!</p>
+
+  <div class="form" role="form" aria-label="Love form">
+    <input id="name1" placeholder="Aapka naam" autocomplete="off" aria-label="Aapka naam">
+    <input id="name2" placeholder="Uska naam" autocomplete="off" aria-label="Uska naam">
+    <button id="calc" class="btn">Check</button>
+  </div>
+
+  <!-- loading -->
+  <div id="loading" class="loading-wrap" aria-hidden="true">
+    <div class="loader" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div id="bar" class="bar"></div>
+    </div>
+    <div class="loading-text">Match ban raha hai... thoda ruk jaiye</div>
+  </div>
+
+  <!-- result -->
+  <div id="result" class="result" role="status" aria-live="polite">
+    <div id="percent" class="percent"></div>
+    <div id="emoji" class="emoji"></div>
+    <div id="message" class="message"></div>
+  </div>
+</div>
+
+<!-- Original modal for high match -->
+<div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal-card">
+    <h2 id="modal-title">शुभ मिलन 💫</h2>
+    <p id="modal-desc">True Love Burns Forever 🔥</p>
+    <button id="modal-close">ठीक है</button>
+  </div>
+</div>
+
+<!-- About Us Button -->
+<button id="aboutBtn">About Us</button>
+
+<!-- About Us Modal -->
+<div id="aboutModal">
+  <div class="modal-content">
+    <h2>About Us ❤️</h2>
+    <p>
+      Welcome to Love Inferno! ❤️‍🔥<br>
+      Our website provides a fun and entertaining way to check love compatibility between two names. 
+      All calculations are for entertainment purposes only. 
+      We aim to create a delightful and interactive experience for users of all ages.
+    </p>
+    <button id="aboutClose">Close</button>
+  </div>
+</div>
+
+<!-- confetti and sounds -->
+<div id="confetti-layer" class="confetti" aria-hidden="true"></div>
+<audio id="fireSound" src="https://www.soundjay.com/mechanical/sounds/fire-01.mp3" preload="auto"></audio>
+<audio id="heartBeat" src="https://www.soundjay.com/human/heart-beat-01.mp3" preload="auto"></audio>
+
+<script>
+/* ----------------------------- Helpers ----------------------------- */
+const name1 = document.getElementById('name1');
+const name2 = document.getElementById('name2');
+const calcBtn = document.getElementById('calc');
+const loadingWrap = document.getElementById('loading');
+const bar = document.getElementById('bar');
+const resultDiv = document.getElementById('result');
+const percentEl = document.getElementById('percent');
+const emojiEl = document.getElementById('emoji');
+const messageEl = document.getElementById('message');
+const modal = document.getElementById('modal');
+const modalTitle = document.getElementById('modal-title');
+const modalDesc = document.getElementById('modal-desc');
+const modalClose = document.getElementById('modal-close');
+const fireSound = document.getElementById('fireSound');
+const heartBeat = document.getElementById('heartBeat');
+const confettiLayer = document.getElementById('confetti-layer');
+const heartsLayer = document.getElementById('hearts-layer');
+const sparksLayer = document.getElementById('sparks-layer');
+
+/* About Us elements */
+const aboutBtn = document.getElementById('aboutBtn');
+const aboutModal = document.getElementById('aboutModal');
+const aboutClose = document.getElementById('aboutClose');
+
+/* ----------------------------- Reset UI ----------------------------- */
+function resetDisplay(){
+  loadingWrap.style.display='none';
+  resultDiv.style.display='none';
+  modal.classList.remove('show');
+  modal.setAttribute('aria-hidden','true');
+  percentEl.textContent='';
+  emojiEl.textContent='';
+  messageEl.textContent='';
+  bar.style.width='0%';
+  clearConfetti();
+}
+
+/* input focus clears */
+[name1,name2].forEach(inp=>{
+  inp.addEventListener('input', resetDisplay);
+  inp.addEventListener('focus', resetDisplay);
+});
+
+/* escape HTML */
+function escapeHtml(str){ return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+/* deterministic percent */
+function nameHashPct(a,b){
+  const s = (a||'').trim().toLowerCase() + '|' + (b||'').trim().toLowerCase();
+  let h = 0;
+  for(let i=0;i<s.length;i++){ h = (h<<5)-h + s.charCodeAt(i); h|=0;}
+  h=Math.abs(h); return h%101;
+}
+
+/* emoji/message */
+function chooseEmoji(p){ if(p>=90)return '💘💍'; if(p>=70)return '❤️‍🔥'; if(p>=50)return '😊💖'; if(p>=30)return '🙂'; return '😕'; }
+function chooseMessage(p){ if(p>=90)return 'वह आग है — दिलों की जोड़ी बेमिसाल! 🔥'; if(p>=70)return 'बहुत अच्छा मिलान — प्यार में तेज़ी और जोश है।'; if(p>=50)return 'अच्छा है — रिश्ता और मजबूत हो सकता है।'; if(p>=30)return 'संभावना है — थोड़ा काम और समझदारी चाहिए।'; return 'कम compatibility — दोस्ती भी खूबसूरत होती है।'; }
+function modalSentenceFor(p,a,b){ a=escapeHtml(a);b=escapeHtml(b); if(p>=90) return `बधाई ${a} और ${b}! आपका मिलन आग-सी तपता है — प्यार सदा जले। 🔥`; if(p>=70) return `${a} और ${b}, बहुत बेहतरीन! आपके रिश्ते में जोश और जूनून है। ❤️‍🔥`; if(p>=50) return `${a} और ${b}, अच्छा मिलन है — साथ समय बिताकर इसे और गहरा बनाइए। 💞`; if(p>=30) return `${a} और ${b}, कोशिश से रिश्ता सुधार सकता है — उम्मीद रखें। ✨`; return `${a} और ${b}, मिलान कम है — पर दोस्ती भी एक कीमती रिश्ता है। 🤝`; }
+
+/* confetti */
+let confettiInterval=null;
+function launchConfetti(duration=3500){
+  clearConfetti();
+  confettiInterval=setInterval(()=>{
+    const el=document.createElement('div');
+    el.style.position='absolute';
+    el.style.left=(Math.random()*100)+'%';
+    el.style.top='-10px';
+    el.style.fontSize=(14+Math.random()*30)+'px';
+    el.textContent=['🎉','💖','❤️','✨','🔥'][Math.floor(Math.random()*5)];
+    el.style.opacity='0';
+    el.style.transition='transform 2.4s linear, opacity 1.5s linear';
+    confettiLayer.appendChild(el);
+    requestAnimationFrame(()=>{el.style.opacity='1'; el.style.transform=`translateY(${110+Math.random()*40}vh) rotate(${Math.random()*720}deg)`});
+    setTimeout(()=>{el.remove()},2600);
+  },90);
+  setTimeout(()=>{clearConfetti()},duration);
+}
+function clearConfetti(){ if(confettiInterval){clearInterval(confettiInterval); confettiInterval=null;} confettiLayer.innerHTML=''; }
+
+/* hearts & sparks */
+function spawnHearts(count=28){heartsLayer.innerHTML='';for(let i=0;i<count;i++){const h=document.createElement('div');h.className='heart';h.textContent='❤️';h.style.left=(Math.random()*100)+'vw';h.style.fontSize=(10+Math.random()*28)+'px';h.style.animationDuration=(6+Math.random()*6)+'s';h.style.animationDelay=(Math.random()*4)+'s';heartsLayer.appendChild(h);}}
+function spawnSparks(count=36){sparksLayer.innerHTML='';for(let i=0;i<count;i++){const s=document.createElement('div');s.className='spark';s.style.left=(Math.random()*100)+'vw';s.style.top=(Math.random()*100)+'vh';s.style.animationDuration=(3+Math.random()*4)+'s';s.style.animationDelay=(Math.random()*3)+'s';sparksLayer.appendChild(s);}}
+spawnHearts(); spawnSparks();
+
+/* bar animation */
+function animateBar(toPct,duration){bar.style.transition=`width ${Math.max(400,duration)}ms ease`; bar.style.width=toPct+'%'; const loader=bar.parentElement;if(loader) loader.setAttribute('aria-valuenow',Math.round(toPct));}
+
+/* calculate click */
+calcBtn.addEventListener('click',()=>{
+  const a=name1.value.trim(),b=name2.value.trim();
+  if(!a||!b){alert('Dono naam bharna zaroori hai!');return;}
+  resetDisplay();
+  loadingWrap.style.display='flex';
+  loadingWrap.setAttribute('aria-hidden','false');
+  let progress=0;
+  animateBar(6,300);
+  const stepInterval=setInterval(()=>{progress+=Math.random()*14+6;if(progress>88)progress=88;animateBar(Math.round(progress),350);},140);
+  const loadTime=1400+Math.floor(Math.random()*900);
+  setTimeout(()=>{
+    clearInterval(stepInterval);
+    animateBar(100,350);
+    setTimeout(()=>{
+      loadingWrap.style.display='none';
+      loadingWrap.setAttribute('aria-hidden','true');
+      const pct=nameHashPct(a,b);
+      percentEl.textContent=pct+'%';
+      emojiEl.textContent=chooseEmoji(pct);
+      messageEl.textContent=chooseMessage(pct);
+      resultDiv.style.display='block';
+      try{heartBeat.currentTime=0;heartBeat.play().catch(()=>{}); fireSound.currentTime=0; fireSound.play().catch(()=>{});}catch(e){}
+      if(pct>=70){
+        modalTitle.textContent='शुभ मिलन 💫';
+        modalDesc.textContent=modalSentenceFor(pct,a,b);
+        modal.classList.add('show'); modal.setAttribute('aria-hidden','false');
+        launchConfetti(4200);
+      } else { launchConfetti(1800);}
+    },260);
+  },loadTime);
+});
+
+/* enter key triggers */
+[name1,name2].forEach(inp=>{inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault(); if(name1.value.trim()&&name2.value.trim()) calcBtn.click();}});});
+
+/* modal close */
+modalClose.addEventListener('click',()=>{modal.classList.remove('show'); modal.setAttribute('aria-hidden','true'); try{heartBeat.pause(); fireSound.pause();}catch(e){}});
+window.addEventListener('beforeunload',()=>{clearConfetti();});
+
+/* About Us button behavior */
+aboutBtn.addEventListener('click',()=>{aboutModal.style.opacity='1'; aboutModal.style.pointerEvents='auto';});
+aboutClose.addEventListener('click',()=>{aboutModal.style.opacity='0'; aboutModal.style.pointerEvents='none';});
+aboutModal.addEventListener('click',(e)=>{if(e.target===aboutModal){aboutModal.style.opacity='0'; aboutModal.style.pointerEvents='none';}});
+
+/* initial reset */
+resetDisplay();
+
+</script>
+</body>
+</html>
